@@ -1,20 +1,20 @@
-# Java HTTP Gradle Demo
+# Java HTTP Gradle Demonstration
 
-A Gradle-managed Java project demonstrating HTTP API client usage with clean separation of concerns.
+A refined Gradle-managed Java endeavor exemplifying HTTP API client utilization with elegant separation of concerns.
 
 ## Structure
 
-- `api/`: HTTP client
-- `model/`: Data models
-- `service/`: Business logic
-- `Main.java`: Demo entry point
+- `api/`: HTTP client implementation
+- `model/`: Data models of distinction
+- `service/`: Business logic orchestration
+- `Main.java`: Principal demonstration entry point
 
 ## Prerequisites
 
-- Java 17: Install with `brew install openjdk@17` (macOS) or download from [Adoptium](https://adoptium.net/)
-- Gradle: Install with `brew install gradle` (macOS) or use the included wrapper `./gradlew`
+- Java 17: One may procure via `brew install openjdk@17` (macOS) or from the [Adoptium](https://adoptium.net/) repository
+- Gradle: Acquire through `brew install gradle` (macOS) or employ the included wrapper `./gradlew`
 
-Ensure Java 17 is in your PATH. On macOS, add to ~/.zshrc:
+Kindly ensure Java 17 resides within your PATH. On macOS, append to ~/.zshrc:
 ```bash
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 ```
@@ -22,7 +22,7 @@ export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 ## Usage
 
 ```bash
-./gradlew build    # Build project
-./gradlew run      # Run demo
-./gradlew dependencyUpdates  # Check updates
+./gradlew build    # Assemble the project
+./gradlew run      # Execute the demonstration
+./gradlew dependencyUpdates  # Inspect for updates
 ```
