@@ -1,0 +1,14 @@
+
+------------------------------------------------------------
+: Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies have later milestone versions:
+ - com.fasterxml.jackson.core:jackson-databind [2.15.2 -> 2.20.1]
+     https://github.com/FasterXML/jackson
+ - com.github.ben-manes.versions:com.github.ben-manes.versions.gradle.plugin [0.51.0 -> 0.53.0]
+ - org.junit.jupiter:junit-jupiter [5.9.2 -> 6.1.0-M1]
+     https://junit.org/
+
+Gradle release-candidate updates:
+ - Gradle: [8.5 -> 9.2.1 -> 9.3.0-rc-2]
