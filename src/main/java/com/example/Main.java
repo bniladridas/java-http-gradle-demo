@@ -12,6 +12,11 @@ public class Main {
         try {
             User user = userService.getUser(1);
             System.out.println("Fetched user: " + user);
+
+            // Demo POST: create a new user
+            User newUser = new User(0, "John Doe", "johndoe", "john@example.com", "123-456-7890", "johndoe.com");
+            User created = userService.createUser(newUser);
+            System.out.println("Created user: " + created);
         } catch (Exception e) {
             e.printStackTrace();
         }

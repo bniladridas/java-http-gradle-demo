@@ -17,6 +17,13 @@ public class UserService {
     }
 
     private String loadBaseUrl() {
+        // Check environment variable first
+        String envUrl = System.getenv("API_BASE_URL");
+        if (envUrl != null && !envUrl.isEmpty()) {
+            return envUrl;
+        }
+
+        // Fallback to properties file
         Properties properties = new Properties();
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("application.properties")) {
             if (is != null) {
@@ -35,5 +42,10 @@ public class UserService {
     public User getUser(int id) throws IOException, InterruptedException {
         String url = baseUrl + "/users/" + id;
         return apiClient.get(url, User.class);
+    }
+
+    public User createUser(User user) throws IOException, InterruptedException {
+        String url = baseUrl + "/users";
+        return apiClient.post(url, user, User.class);
     }
 }

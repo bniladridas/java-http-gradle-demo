@@ -8,25 +8,52 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.util.logging.Logger;
 
 public class ApiClient {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
+    private final Logger logger;
 
     public ApiClient() {
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
         this.objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.logger = Logger.getLogger(ApiClient.class.getName());
     }
 
     public <T> T get(String url, Class<T> responseType) throws IOException, InterruptedException {
+        logger.info("Sending GET request to: " + url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info("Received response with status: " + response.statusCode());
 
         if (response.statusCode() != 200) {
+            throw new RuntimeException("HTTP error: " + response.statusCode());
+        }
+
+        return objectMapper.readValue(response.body(), responseType);
+    }
+
+    public <T> T post(String url, Object body, Class<T> responseType) throws IOException, InterruptedException {
+        logger.info("Sending POST request to: " + url);
+        String jsonBody = objectMapper.writeValueAsString(body);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .header("Content-Type", "application/json")
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info("Received response with status: " + response.statusCode());
+
+        if (response.statusCode() != 201) {
             throw new RuntimeException("HTTP error: " + response.statusCode());
         }
 
