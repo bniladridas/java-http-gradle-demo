@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.UserServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-12-27T19:51:29.471Z" hostname="niladris-MacBook-Air.local" time="0.867">
+<testsuite name="com.example.UserServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-12-27T19:55:20.966Z" hostname="niladris-MacBook-Air.local" time="0.53">
   <properties/>
-  <testcase name="testGetUser()" classname="com.example.UserServiceTest" time="0.145"/>
-  <testcase name="testCreateUser()" classname="com.example.UserServiceTest" time="0.721"/>
+  <testcase name="testGetUser()" classname="com.example.UserServiceTest" time="0.156"/>
+  <testcase name="testCreateUser()" classname="com.example.UserServiceTest" time="0.373"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Dec 28, 2025 1:21:29 AM com.example.api.ApiClient get
+  <system-err><![CDATA[Dec 28, 2025 1:25:20 AM com.example.api.ApiClient get
 INFO: Sending GET request to: https://jsonplaceholder.typicode.com/users/1
-Dec 28, 2025 1:21:29 AM com.example.api.ApiClient get
+Dec 28, 2025 1:25:21 AM com.example.api.ApiClient get
 INFO: Received response with status: 200
-Dec 28, 2025 1:21:29 AM com.example.api.ApiClient post
+Dec 28, 2025 1:25:21 AM com.example.api.ApiClient post
 INFO: Sending POST request to: https://jsonplaceholder.typicode.com/users
-Dec 28, 2025 1:21:30 AM com.example.api.ApiClient post
+Dec 28, 2025 1:25:21 AM com.example.api.ApiClient post
 INFO: Received response with status: 201
 ]]></system-err>
 </testsuite>

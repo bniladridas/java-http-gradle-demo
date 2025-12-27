@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\java-http-gradle-demo.jar;%APP_HOME%\lib\jackson-annotations-2.15.2.jar;%APP_HOME%\lib\jackson-core-2.15.2.jar;%APP_HOME%\lib\jackson-databind-2.15.2.jar
+set CLASSPATH=%APP_HOME%\lib\java-http-gradle-demo.jar;%APP_HOME%\lib\jackson-core-2.20.1.jar;%APP_HOME%\lib\jackson-databind-2.20.1.jar;%APP_HOME%\lib\jackson-annotations-2.20.jar
 
 
 @rem Execute java-http-gradle-demo
