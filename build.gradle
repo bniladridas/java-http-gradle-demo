@@ -4,7 +4,9 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.51.0'
 }
 
-mainClassName = 'com.example.Main'
+application {
+    mainClass = 'com.example.Main'
+}
 
 java {
     toolchain {
@@ -19,6 +21,7 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
