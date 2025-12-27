@@ -4,6 +4,8 @@ import com.example.api.ApiClient;
 import com.example.model.User;
 import com.example.service.UserService;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         ApiClient apiClient = new ApiClient();
@@ -17,8 +19,12 @@ public class Main {
             User newUser = new User(0, "John Doe", "johndoe", "john@example.com", "123-456-7890", "johndoe.com");
             User created = userService.createUser(newUser);
             System.out.println("Created user: " + created);
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.err.println("Network error occurred: " + e.getMessage());
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.err.println("Operation was interrupted: " + e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 }
