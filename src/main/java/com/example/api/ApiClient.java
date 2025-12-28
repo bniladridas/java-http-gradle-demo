@@ -27,7 +27,7 @@ public class ApiClient {
     }
 
     public <T> T get(String url, Class<T> responseType) throws IOException, InterruptedException {
-        logger.info("Sending GET request to: " + url);
+        logger.info("Sending GET request to: " + sanitizeUrl(url));
         URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -46,7 +46,7 @@ public class ApiClient {
     }
 
     public <T> T post(String url, Object body, Class<T> responseType) throws IOException, InterruptedException {
-        logger.info("Sending POST request to: " + url);
+        logger.info("Sending POST request to: " + sanitizeUrl(url));
         String jsonBody = objectMapper.writeValueAsString(body);
         URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
@@ -70,9 +70,21 @@ public class ApiClient {
         try {
             return URI.create(url);
         } catch (IllegalArgumentException e) {
-            String errorMessage = "Invalid URL: " + url;
+            String errorMessage = "Invalid URL format";
             logger.severe(errorMessage);
             throw new IOException(errorMessage, e);
+        }
+    }
+
+    private String sanitizeUrl(String url) {
+        try {
+            // Using java.net.URI to correctly parse the URL.
+            java.net.URI uri = java.net.URI.create(url);
+            // Reconstruct the URI to include the authority (host and port) but exclude query params and fragment.
+            return new java.net.URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, null).toString();
+        } catch (java.net.URISyntaxException | IllegalArgumentException e) {
+            // Return a generic string for any parsing failures to avoid logging sensitive data.
+            return "invalid-url";
         }
     }
 }

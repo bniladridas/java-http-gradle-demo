@@ -58,7 +58,15 @@ public class UserService {
     }
 
     private boolean isValidBaseUrl(String url) {
-        return url.startsWith("https://jsonplaceholder.typicode.com");
+        try {
+            java.net.URI uri = new java.net.URI(url);
+            String host = uri.getHost();
+            // Validate that the host is exactly the expected domain to prevent SSRF.
+            return "jsonplaceholder.typicode.com".equalsIgnoreCase(host);
+        } catch (java.net.URISyntaxException e) {
+            // A malformed URL is not a valid base URL.
+            return false;
+        }
     }
 
     public User getUser(int id) throws IOException, InterruptedException {
