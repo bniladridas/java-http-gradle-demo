@@ -28,6 +28,7 @@ public class ApiClient {
         logger.info("Sending GET request to: " + url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(30))
                 .GET()
                 .build();
 
@@ -46,6 +47,7 @@ public class ApiClient {
         String jsonBody = objectMapper.writeValueAsString(body);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(30))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .header("Content-Type", "application/json")
                 .build();
