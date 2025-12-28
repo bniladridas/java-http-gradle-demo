@@ -12,6 +12,8 @@ import java.time.Duration;
 import java.util.logging.Logger;
 
 public class ApiClient {
+    private static final int REQUEST_TIMEOUT_SECONDS = 30;
+
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final Logger logger;
@@ -25,9 +27,11 @@ public class ApiClient {
     }
 
     public <T> T get(String url, Class<T> responseType) throws IOException, InterruptedException {
-        logger.info("Sending GET request to: " + url);
+        logger.info("Sending GET request to: " + sanitizeUrl(url));
+        URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+                .uri(uri)
+                .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
                 .GET()
                 .build();
 
@@ -42,10 +46,12 @@ public class ApiClient {
     }
 
     public <T> T post(String url, Object body, Class<T> responseType) throws IOException, InterruptedException {
-        logger.info("Sending POST request to: " + url);
+        logger.info("Sending POST request to: " + sanitizeUrl(url));
         String jsonBody = objectMapper.writeValueAsString(body);
+        URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+                .uri(uri)
+                .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .header("Content-Type", "application/json")
                 .build();
@@ -58,5 +64,24 @@ public class ApiClient {
         }
 
         return objectMapper.readValue(response.body(), responseType);
+    }
+
+    private URI parseUri(String url) throws IOException {
+        try {
+            return URI.create(url);
+        } catch (IllegalArgumentException e) {
+            String errorMessage = "Invalid URL: " + url;
+            logger.severe(errorMessage);
+            throw new IOException(errorMessage, e);
+        }
+    }
+
+    private String sanitizeUrl(String url) {
+        try {
+            URI uri = URI.create(url);
+            return uri.getScheme() + "://" + uri.getHost() + uri.getPath();
+        } catch (Exception e) {
+            return "invalid-url";
+        }
     }
 }
