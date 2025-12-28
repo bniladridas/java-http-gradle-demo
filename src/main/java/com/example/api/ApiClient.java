@@ -12,6 +12,8 @@ import java.time.Duration;
 import java.util.logging.Logger;
 
 public class ApiClient {
+    private static final int REQUEST_TIMEOUT_SECONDS = 30;
+
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final Logger logger;
@@ -28,6 +30,7 @@ public class ApiClient {
         logger.info("Sending GET request to: " + url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
                 .GET()
                 .build();
 
@@ -46,6 +49,7 @@ public class ApiClient {
         String jsonBody = objectMapper.writeValueAsString(body);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .header("Content-Type", "application/json")
                 .build();
