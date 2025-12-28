@@ -28,12 +28,7 @@ public class ApiClient {
 
     public <T> T get(String url, Class<T> responseType) throws IOException, InterruptedException {
         logger.info("Sending GET request to: " + url);
-        URI uri;
-        try {
-            uri = URI.create(url);
-        } catch (IllegalArgumentException e) {
-            throw new IOException("Invalid URL: " + url, e);
-        }
+        URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
@@ -53,12 +48,7 @@ public class ApiClient {
     public <T> T post(String url, Object body, Class<T> responseType) throws IOException, InterruptedException {
         logger.info("Sending POST request to: " + url);
         String jsonBody = objectMapper.writeValueAsString(body);
-        URI uri;
-        try {
-            uri = URI.create(url);
-        } catch (IllegalArgumentException e) {
-            throw new IOException("Invalid URL: " + url, e);
-        }
+        URI uri = parseUri(url);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .timeout(Duration.ofSeconds(REQUEST_TIMEOUT_SECONDS))
@@ -74,5 +64,15 @@ public class ApiClient {
         }
 
         return objectMapper.readValue(response.body(), responseType);
+    }
+
+    private URI parseUri(String url) throws IOException {
+        try {
+            return URI.create(url);
+        } catch (IllegalArgumentException e) {
+            String errorMessage = "Invalid URL: " + url;
+            logger.severe(errorMessage);
+            throw new IOException(errorMessage, e);
+        }
     }
 }
