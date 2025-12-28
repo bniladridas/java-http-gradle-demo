@@ -78,9 +78,12 @@ public class ApiClient {
 
     private String sanitizeUrl(String url) {
         try {
-            URI uri = URI.create(url);
-            return uri.getScheme() + "://" + uri.getHost() + uri.getPath();
-        } catch (Exception e) {
+            // Using java.net.URI to correctly parse the URL.
+            java.net.URI uri = java.net.URI.create(url);
+            // Reconstruct the URI to include the authority (host and port) but exclude query params and fragment.
+            return new java.net.URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, null).toString();
+        } catch (java.net.URISyntaxException | IllegalArgumentException e) {
+            // Return a generic string for any parsing failures to avoid logging sensitive data.
             return "invalid-url";
         }
     }
