@@ -70,7 +70,7 @@ public class ApiClient {
         try {
             return URI.create(url);
         } catch (IllegalArgumentException e) {
-            String errorMessage = "Invalid URL: " + url;
+            String errorMessage = "Invalid URL format";
             logger.severe(errorMessage);
             throw new IOException(errorMessage, e);
         }
