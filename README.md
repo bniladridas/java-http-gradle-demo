@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/basebin/gradledemo/main/.github/assets/thumbnail.png" alt="gradledemo" width="100%">
+</p>
+
 # Java HTTP Gradle Demonstration
 
 A refined Gradle-managed Java endeavor exemplifying HTTP API client utilization with elegant separation of concerns.
